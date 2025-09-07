@@ -34,11 +34,12 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build Release APK
-        run: ./gradlew assembleRelease \
+        run: ./gradlew \
           -Pandroid.injected.signing.store.file=app/release.keystore \
           -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD \
           -Pandroid.injected.signing.key.alias=$KEY_ALIAS \
-          -Pandroid.injected.signing.key.password=$KEY_PASSWORD
+          -Pandroid.injected.signing.key.password=$KEY_PASSWORD \
+          assembleRelease
 
       - name: Rename APK with version (replace dots with dashes)
         id: rename_apk
