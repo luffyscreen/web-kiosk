@@ -3,12 +3,17 @@ name: Build & Release Signed APK
 on:
   push:
     tags:
-      - 'v*'  # Trigger on tags starting with "v"
+      - 'v*'
 
 jobs:
   build:
     name: Build Signed APK
     runs-on: ubuntu-latest
+    env:
+      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+      KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+      KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+      KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
     steps:
       - name: Checkout Code
@@ -23,13 +28,17 @@ jobs:
       - name: Decode Keystore
         run: |
           mkdir -p app
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > app/release.keystore
+          echo "$KEYSTORE_BASE64" | base64 --decode > app/release.keystore
 
       - name: Make Gradle executable
         run: chmod +x ./gradlew
 
       - name: Build Release APK
-        run: ./gradlew assembleRelease
+        run: ./gradlew assembleRelease \
+          -Pandroid.injected.signing.store.file=app/release.keystore \
+          -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD \
+          -Pandroid.injected.signing.key.alias=$KEY_ALIAS \
+          -Pandroid.injected.signing.key.password=$KEY_PASSWORD
 
       - name: Rename APK with version (replace dots with dashes)
         id: rename_apk
