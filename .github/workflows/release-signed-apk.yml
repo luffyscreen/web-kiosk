@@ -3,7 +3,7 @@ name: Build & Release Signed APK
 on:
   push:
     tags:
-      - 'v*'
+      - 'v*'  # Trigger on tags starting with "v"
 
 jobs:
   build:
@@ -31,15 +31,17 @@ jobs:
         run: ./gradlew assembleRelease
 
       - name: Rename APK with version (replace dots with dashes)
+        id: rename_apk
         run: |
           VERSION=${GITHUB_REF#refs/tags/}
           SAFE_VERSION=${VERSION//./-}
           mv app/build/outputs/apk/release/app-release.apk screenlite-web-kiosk-$SAFE_VERSION.apk
+          echo "apk_name=screenlite-web-kiosk-$SAFE_VERSION.apk" >> $GITHUB_OUTPUT
 
       - name: Upload to GitHub Releases
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
-          files: screenlite-web-kiosk-${{ github.ref_name//./- }}.apk
+          files: ${{ steps.rename_apk.outputs.apk_name }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
