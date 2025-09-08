@@ -2,7 +2,7 @@
 
 A simple Android kiosk browser app that displays web content in full-screen mode.
 
-[<img src="./docs/media/get_apk.png" height="80" alt="Get APK">](https://github.com/screenlite/web-kiosk/releases/download/v0.0.3/screenlite-web-kiosk-v0-0-3.apk)
+[<img src="./docs/media/get_apk.png" height="80" alt="Get APK">](https://github.com/screenlite/web-kiosk/releases/download/v0.0.4/screenlite-web-kiosk-v0-0-4.apk)
 [<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="80" alt="Get it at IzzyOnDroid">](https://apt.izzysoft.de/packages/org.screenlite.webkiosk)
 
 ![preview](./docs/media/image.png)
@@ -11,7 +11,7 @@ A simple Android kiosk browser app that displays web content in full-screen mode
 - Displays any website in immersive full-screen mode
 - Automatically launches on device boot
 - Brings itself back to the foreground if minimized
-- Click and scroll are disabled in WebView
+- Clicking and scrolling are disabled in WebView on TV
 - Supports website rotation (0°, 90°, 180°, 270°), even if the device doesn’t support orientation changes
 - Automatic retry mechanism with exponential backoff for network failures
 - Automatically injects responsive viewport meta tags
@@ -29,7 +29,7 @@ If you find a bug, please open a GitHub issue and include logcat logs if possibl
 1. Install the APK on your Android device.  
 2. Grant the **Display over other apps** permission to Screenlite Web Kiosk.  
 3. Launch the app.  
-4. Access settings by tapping the screen **5 times quickly** (or pressing the center button on a TV remote).  
+4. Access settings by tapping the screen 5 times quickly in the bottom-left corner on a mobile device, or by pressing the center button (OK) on a TV remote.  
 5. Enter the website URL you want to display.  
 6. Set the app visibility check interval (recommended 5–10 seconds). If you need time to configure the device, set a higher number.  
    *Note: The app won’t automatically bring itself back to the front when this timer ends.*  
@@ -65,7 +65,7 @@ If you find a bug, please open a GitHub issue and include logcat logs if possibl
 3. **Screen Rotation**: Display rotation angle (0°, 90°, 180°, 270°)
 
 ### Accessing Settings
-- **Mobile/Touch Devices**: Tap 5 times within 2 seconds anywhere on the screen  
+- **Mobile/Touch Devices**: Tap 5 times in the bottom-left corner of the screen within 2 seconds
 - **Android TV**: Use the center button on the remote 5 times within 2 seconds  
 
 ## Application Lifecycle
