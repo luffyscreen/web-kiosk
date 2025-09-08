@@ -66,19 +66,15 @@ class WebViewManager(
                 super.onPageStarted(view, url, favicon)
                 view.visibility = View.INVISIBLE
                 onPageLoading(true)
-                ViewportMetaInjector.inject(view)
-            }
-
-            override fun onPageCommitVisible(view: WebView, url: String?) {
-                super.onPageCommitVisible(view, url)
-                ViewportMetaInjector.inject(view)
             }
 
             override fun onPageFinished(view: WebView, url: String?) {
                 super.onPageFinished(view, url)
-                view.visibility = View.VISIBLE
-                onPageLoading(false)
                 ViewportMetaInjector.inject(view)
+                view.postDelayed({
+                    view.visibility = View.VISIBLE
+                    onPageLoading(false)
+                }, 100)
             }
 
             override fun onReceivedError(
