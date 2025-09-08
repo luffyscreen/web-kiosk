@@ -8,6 +8,7 @@ A simple Android kiosk browser app that displays web content in full-screen mode
 - Displays any website in immersive full-screen mode
 - Automatically launches on device boot
 - Brings itself back to the foreground if minimized
+- Click and scroll are disabled in WebView
 - Supports website rotation (0°, 90°, 180°, 270°), even if the device doesn’t support orientation changes
 - Automatic retry mechanism with exponential backoff for network failures
 - Automatically injects responsive viewport meta tags
