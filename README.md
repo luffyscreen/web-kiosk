@@ -2,6 +2,7 @@
 
 A simple Android kiosk browser app that displays web content in full-screen mode.
 
+[<img src="./docs/media/get_apk.png" height="80" alt="Get APK">](https://github.com/screenlite/web-kiosk/releases/download/v0.0.3/screenlite-web-kiosk-v0-0-3.apk)
 [<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="80" alt="Get it at IzzyOnDroid">](https://apt.izzysoft.de/packages/org.screenlite.webkiosk)
 
 ![preview](./docs/media/image.png)
@@ -72,3 +73,7 @@ If you find a bug, please open a GitHub issue and include logcat logs if possibl
 2. **Service**: StayOnTopService runs as foreground service with configurable check interval  
 3. **Main Activity**: Displays web content in full-screen immersive mode  
 4. **Monitoring**: Service continuously monitors if the app is visible and brings it to front if needed  
+
+## Attribution
+
+Android is a trademark of Google LLC. The Android robot is reproduced or modified from work created and shared by Google and used according to terms described in the [Creative Commons 3.0 Attribution License](https://creativecommons.org/licenses/by/3.0/).
