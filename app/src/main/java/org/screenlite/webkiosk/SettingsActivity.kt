@@ -25,6 +25,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toDrawable
@@ -134,7 +135,7 @@ fun FocusableButton(
             ),
         colors = ButtonDefaults.buttonColors(
             containerColor = background,
-            contentColor = content
+            contentColor = Color(0xFFFFFFFF)
         ),
         shape = RoundedCornerShape(8.dp)
     ) {
@@ -180,7 +181,7 @@ fun SettingsScreen() {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(horizontal = 48.dp, vertical = 32.dp)
+                .padding(start = 48.dp, end = 48.dp, bottom = 32.dp, top = 8.dp)
                 .widthIn(max = 550.dp)
                 .let { if (!isTvDevice()) it.imePadding() else it }
                 .verticalScroll(rememberScrollState()),
@@ -231,7 +232,7 @@ fun SettingsScreen() {
                         OutlinedButton(
                             onClick = { rotation = angle },
                             colors = ButtonDefaults.outlinedButtonColors(
-                                containerColor = if (rotation == angle) MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
+                                containerColor = if (rotation == angle) MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
                                 else Color.Transparent
                             )
                         ) {
@@ -404,5 +405,33 @@ fun SettingsField(
                 )
             )
         }
+    }
+}
+
+@Preview(
+    name = "UHD TV Preview",
+    device = "spec:width=3840px,height=2160px,dpi=320",
+    uiMode = Configuration.UI_MODE_TYPE_TELEVISION
+)
+@Composable
+fun SettingsScreenUhdTvPreview() {
+    TvSettingsTheme {
+        SettingsScreen()
+    }
+}
+
+@Preview(name = "Settings Screen TV Preview", device = "id:tv_1080p")
+@Composable
+fun SettingsScreenTvPreview() {
+    TvSettingsTheme {
+        SettingsScreen()
+    }
+}
+
+@Preview(name = "Settings Screen Phone Preview", device = "id:pixel_4")
+@Composable
+fun SettingsScreenPhonePreview() {
+    TvSettingsTheme {
+        SettingsScreen()
     }
 }
