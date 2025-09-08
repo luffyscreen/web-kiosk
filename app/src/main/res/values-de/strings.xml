@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Screenlite Web Kiosk</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Kiosk-Einstellungen</string>
+    <string name="settings_kiosk_url_label">Kiosk-URL</string>
+    <string name="settings_kiosk_url_desc">Dies ist die einzige Webseite, die im Kioskmodus angezeigt wird.</string>
+    <string name="settings_kiosk_url_placeholder">https://screenlite.org</string>
+
+    <string name="settings_check_interval_label">App-Prüfintervall (Sekunden)</string>
+    <string name="settings_check_interval_desc">Wie oft der Dienst überprüft, ob der Kiosk aktiv ist. Falls geschlossen, wird er automatisch neu gestartet.</string>
+    <string name="settings_check_interval_placeholder">z. B. 30</string>
+    <string name="settings_check_interval_supporting">Min: 1, Max: 99999</string>
+    <string name="settings_check_interval_empty">Intervall darf nicht leer sein</string>
+    <string name="settings_check_interval_invalid">Bitte geben Sie einen Wert zwischen 1 und 99999 ein</string>
+
+    <string name="settings_rotation_label">Bildschirmdrehung</string>
+
+    <!-- Buttons -->
+    <string name="button_cancel">Abbrechen</string>
+    <string name="button_save">Speichern</string>
+</resources>

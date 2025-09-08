@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -118,7 +119,6 @@ fun FocusableButton(
     text: String,
     onClick: () -> Unit,
     background: Color,
-    content: Color
 ) {
     var isFocused by remember { mutableStateOf(false) }
 
@@ -165,7 +165,7 @@ fun SettingsScreen() {
             TopAppBar(
                 title = {
                     Text(
-                        text = "Kiosk Settings",
+                        text = stringResource(R.string.settings_title),
                         style = MaterialTheme.typography.headlineLarge,
                         color = MaterialTheme.colorScheme.onBackground
                     )
@@ -189,19 +189,19 @@ fun SettingsScreen() {
             Spacer(Modifier.height(24.dp))
 
             SettingsField(
-                label = "Kiosk URL",
-                description = "This is the only webpage shown in kiosk mode.",
+                label = stringResource(R.string.settings_kiosk_url_label),
+                description = stringResource(R.string.settings_kiosk_url_desc),
                 value = kioskUrl,
                 onValueChange = { kioskUrl = it },
-                placeholder = "https://screenlite.org",
+                placeholder = stringResource(R.string.settings_kiosk_url_placeholder),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri)
             )
 
             Spacer(modifier = Modifier.height(32.dp))
 
             SettingsField(
-                label = "App Check Interval (seconds)",
-                description = "How often the service verifies the kiosk is active. If closed, it restarts automatically.",
+                label = stringResource(R.string.settings_check_interval_label),
+                description = stringResource(R.string.settings_check_interval_desc),
                 value = checkIntervalSeconds,
                 onValueChange = { newValue ->
                     if (newValue.isEmpty() || newValue.matches(Regex("\\d*"))) {
@@ -209,16 +209,16 @@ fun SettingsScreen() {
                         errorMessage = null
                     }
                 },
-                placeholder = "e.g., 30",
+                placeholder = stringResource(R.string.settings_check_interval_placeholder),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 isError = errorMessage != null,
-                supportingText = errorMessage ?: "Min: 1, Max: 99999"
+                supportingText = errorMessage ?: stringResource(R.string.settings_check_interval_supporting)
             )
 
             Spacer(modifier = Modifier.height(32.dp))
 
             Text(
-                text = "Screen Rotation",
+                text = stringResource(R.string.settings_rotation_label),
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(top = 24.dp, bottom = 8.dp)
             )
@@ -277,22 +277,21 @@ fun SettingsScreen() {
                 horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.End)
             ) {
                 FocusableButton(
-                    text = "Cancel",
+                    text = stringResource(R.string.button_cancel),
                     onClick = { (context as? ComponentActivity)?.finish() },
                     background = MaterialTheme.colorScheme.surface,
-                    content = MaterialTheme.colorScheme.onSurface
                 )
 
                 FocusableButton(
-                    text = "Save",
+                    text = stringResource(R.string.button_save),
                     onClick = {
                         if (checkIntervalSeconds.isBlank()) {
-                            errorMessage = "Interval cannot be empty"
+                            errorMessage = context.getString(R.string.settings_check_interval_empty)
                             return@FocusableButton
                         }
                         val seconds = checkIntervalSeconds.toLongOrNull()
                         if (seconds == null || seconds !in 1..99999) {
-                            errorMessage = "Please enter a value between 1 and 99999"
+                            errorMessage = context.getString(R.string.settings_check_interval_invalid)
                             return@FocusableButton
                         }
 
@@ -309,7 +308,6 @@ fun SettingsScreen() {
                         (context as? ComponentActivity)?.finish()
                     },
                     background = MaterialTheme.colorScheme.primary,
-                    content = MaterialTheme.colorScheme.onPrimary
                 )
             }
         }

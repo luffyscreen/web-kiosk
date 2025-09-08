@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Screenlite 网页信息亭</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">信息亭设置</string>
+    <string name="settings_kiosk_url_label">信息亭网址</string>
+    <string name="settings_kiosk_url_desc">这是在信息亭模式下显示的唯一网页。</string>
+    <string name="settings_kiosk_url_placeholder">https://screenlite.org</string>
+
+    <string name="settings_check_interval_label">应用检查间隔（秒）</string>
+    <string name="settings_check_interval_desc">服务检查信息亭是否正在运行的频率。如果关闭，将自动重启。</string>
+    <string name="settings_check_interval_placeholder">例如：30</string>
+    <string name="settings_check_interval_supporting">最小: 1，最大: 99999</string>
+    <string name="settings_check_interval_empty">间隔不能为空</string>
+    <string name="settings_check_interval_invalid">请输入 1 到 99999 之间的值</string>
+
+    <string name="settings_rotation_label">屏幕旋转</string>
+
+    <!-- Buttons -->
+    <string name="button_cancel">取消</string>
+    <string name="button_save">保存</string>
+</resources>

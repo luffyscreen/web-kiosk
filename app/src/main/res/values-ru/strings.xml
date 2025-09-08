@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Screenlite Веб-Киоск</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_title">Настройки киоска</string>
+    <string name="settings_kiosk_url_label">URL киоска</string>
+    <string name="settings_kiosk_url_desc">Это единственная веб-страница, отображаемая в режиме киоска.</string>
+    <string name="settings_kiosk_url_placeholder">https://screenlite.org</string>
+
+    <string name="settings_check_interval_label">Интервал проверки приложения (секунды)</string>
+    <string name="settings_check_interval_desc">Как часто сервис проверяет, что киоск активен. Если закрыт, он перезапускается автоматически.</string>
+    <string name="settings_check_interval_placeholder">например, 30</string>
+    <string name="settings_check_interval_supporting">Мин: 1, Макс: 99999</string>
+    <string name="settings_check_interval_empty">Интервал не может быть пустым</string>
+    <string name="settings_check_interval_invalid">Введите значение от 1 до 99999</string>
+
+    <string name="settings_rotation_label">Поворот экрана</string>
+
+    <!-- Buttons -->
+    <string name="button_cancel">Отмена</string>
+    <string name="button_save">Сохранить</string>
+</resources>
