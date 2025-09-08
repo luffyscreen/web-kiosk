@@ -1,7 +1,6 @@
 package org.screenlite.webkiosk
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -12,15 +11,18 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import org.screenlite.webkiosk.app.FullScreenHelper
 import org.screenlite.webkiosk.app.NotificationPermissionHelper
 import org.screenlite.webkiosk.app.StayOnTopServiceStarter
 import org.screenlite.webkiosk.app.TapUnlockHandler
-import org.screenlite.webkiosk.components.KioskInputOverlay
 import org.screenlite.webkiosk.components.MainScreen
+import org.screenlite.webkiosk.components.TouchKioskInputOverlay
+import org.screenlite.webkiosk.components.TvKioskInputOverlay
 import org.screenlite.webkiosk.ui.theme.ScreenliteWebKioskTheme
+import org.screenlite.webkiosk.ui.theme.isTvDevice
 
 class MainActivity : ComponentActivity() {
     private lateinit var unlockHandler: TapUnlockHandler
@@ -63,8 +65,18 @@ fun AppContent(unlockHandler: TapUnlockHandler) {
         }
     }
 
+    val isTv = isTvDevice()
+
     Box(Modifier.fillMaxSize()) {
         MainScreen()
-        KioskInputOverlay(onTap = { unlockHandler.registerTap() })
+
+        if(isTv) {
+            TvKioskInputOverlay(onTap = { unlockHandler.registerTap() })
+        } else {
+            TouchKioskInputOverlay(
+                onTap = { unlockHandler.registerTap() },
+                modifier = Modifier.align(Alignment.BottomStart),
+            )
+        }
     }
 }
