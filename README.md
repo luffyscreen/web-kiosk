@@ -1,6 +1,8 @@
 # Screenlite Web Kiosk
 
-A simple Android kiosk app that displays web content in full-screen mode.
+A simple Android kiosk browser app that displays web content in full-screen mode.
+
+![preview](./docs/media/image.png)
 
 ## Key Features
 - Displays any website in immersive full-screen mode
