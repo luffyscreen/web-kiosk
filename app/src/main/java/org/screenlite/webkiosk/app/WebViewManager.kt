@@ -74,7 +74,7 @@ class WebViewManager(
                 view.postDelayed({
                     view.visibility = View.VISIBLE
                     onPageLoading(false)
-                }, 100)
+                }, 1000)
             }
 
             override fun onReceivedError(
