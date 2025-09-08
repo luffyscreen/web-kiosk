@@ -4,6 +4,7 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.os.Handler
 import android.os.IBinder
@@ -26,6 +27,13 @@ class StayOnTopService : Service() {
 
         @Volatile
         var isActivityVisible = false
+
+        fun restart(context: Context) {
+            if (isRunning) {
+                context.stopService(Intent(context, StayOnTopService::class.java))
+            }
+            context.startService(Intent(context, StayOnTopService::class.java))
+        }
     }
 
     private val handler = Handler(Looper.getMainLooper())
@@ -94,8 +102,13 @@ class StayOnTopService : Service() {
         val channel = NotificationChannel(
             channelId,
             "Screenlite Web Kiosk",
-            NotificationManager.IMPORTANCE_HIGH
-        )
+            NotificationManager.IMPORTANCE_DEFAULT
+        ).apply {
+            setSound(null, null)
+            enableVibration(false)
+            enableLights(false)
+        }
+
         val nm = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         nm.createNotificationChannel(channel)
         val notification: Notification = Notification.Builder(this, channelId)
