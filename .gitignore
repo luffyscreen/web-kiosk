@@ -15,3 +15,4 @@
 local.properties
 release.keystore
 release.keystore.base64.txt
+.kotlin/
