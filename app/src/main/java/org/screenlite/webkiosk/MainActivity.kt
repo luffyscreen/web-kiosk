@@ -58,10 +58,8 @@ fun AppContent(unlockHandler: TapUnlockHandler) {
     }
 
     LaunchedEffect(Unit) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (!NotificationPermissionHelper.hasPermission(context)) {
-                NotificationPermissionHelper.requestPermission(permissionLauncher)
-            }
+        if (!NotificationPermissionHelper.hasPermission(context)) {
+            NotificationPermissionHelper.requestPermission(permissionLauncher)
         }
     }
 
