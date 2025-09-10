@@ -24,6 +24,10 @@ class WebViewManager(
             setBackgroundColor(android.graphics.Color.TRANSPARENT)
             appliedRotation = rotation.toFloat()
 
+            isFocusable = true
+            isFocusableInTouchMode = true
+            requestFocus()
+
             configureWebViewSettings()
             setupWebViewListeners()
         }
