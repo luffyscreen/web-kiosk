@@ -23,6 +23,17 @@ object ViewportMetaInjector {
                     }
                     meta.content = "width=${width}, height=${height}, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no";
                 })();
+                (function() {
+                    var style = document.createElement('style');
+                    style.type = 'text/css';
+                    style.innerHTML = `
+                        html, body {
+                            max-width: 100vw !important;
+                            overflow-x: hidden !important;
+                        }
+                    `;
+                    document.head.appendChild(style);
+                })();
                 """.trimIndent(),
                 null
             )
