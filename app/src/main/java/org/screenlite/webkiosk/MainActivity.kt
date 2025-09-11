@@ -1,5 +1,6 @@
 package org.screenlite.webkiosk
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,12 +8,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import org.screenlite.webkiosk.app.FullScreenHelper
 import org.screenlite.webkiosk.app.NotificationPermissionHelper
@@ -39,7 +42,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             ScreenliteWebKioskTheme {
-                AppContent(unlockHandler)
+                AppContent(unlockHandler, this)
             }
         }
     }
@@ -50,7 +53,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun AppContent(unlockHandler: TapUnlockHandler) {
+fun AppContent(unlockHandler: TapUnlockHandler, activity: Activity) {
     val context = LocalContext.current
 
     val permissionLauncher = rememberLauncherForActivityResult(
@@ -67,8 +70,8 @@ fun AppContent(unlockHandler: TapUnlockHandler) {
 
     val isTv = isTvDevice()
 
-    Box(Modifier.fillMaxSize()) {
-        MainScreen()
+    Box(Modifier.fillMaxSize().background(Color.White)) {
+        MainScreen(activity = activity, modifier = Modifier.fillMaxSize())
 
         if(isTv) {
             TvKioskInputOverlay(onTap = { unlockHandler.registerTap() })
