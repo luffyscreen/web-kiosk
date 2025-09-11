@@ -9,7 +9,6 @@ class RotatedWebView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : WebView(context, attrs, defStyleAttr) {
-
     var appliedRotation: Float = 0f
         set(value) {
             field = value
