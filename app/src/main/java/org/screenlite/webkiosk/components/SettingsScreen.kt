@@ -1,6 +1,5 @@
 package org.screenlite.webkiosk.components
 
-import android.content.Intent
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -17,7 +16,8 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.screenlite.webkiosk.R
-import org.screenlite.webkiosk.app.DataStoreHelper
+import org.screenlite.webkiosk.data.KioskSettingsFactory
+import org.screenlite.webkiosk.data.Rotation
 import org.screenlite.webkiosk.service.StayOnTopService
 import org.screenlite.webkiosk.ui.theme.isTvDevice
 
@@ -25,16 +25,16 @@ import org.screenlite.webkiosk.ui.theme.isTvDevice
 @Composable
 fun SettingsScreen() {
     val context = LocalContext.current
+    val kioskSettings = remember { KioskSettingsFactory.get(context) }
     var checkIntervalSeconds by remember { mutableStateOf("") }
     var kioskUrl by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf<String?>(null) }
-    var rotation by remember { mutableIntStateOf(0) }
+    var rotation: Rotation by remember { mutableStateOf(Rotation.ROTATION_0) }
 
-    // Load current values
     LaunchedEffect(Unit) {
-        checkIntervalSeconds = (DataStoreHelper.getCheckInterval(context).first() / 1000).toString()
-        kioskUrl = DataStoreHelper.getStartUrl(context).first()
-        rotation = DataStoreHelper.getRotation(context).first()
+        checkIntervalSeconds = (kioskSettings.getCheckInterval().first() / 1000).toString()
+        kioskUrl = kioskSettings.getStartUrl().first()
+        rotation = kioskSettings.getRotation().first()
     }
 
     Scaffold(
@@ -126,9 +126,9 @@ fun SettingsScreen() {
                         }
 
                         (context as? ComponentActivity)?.lifecycleScope?.launch {
-                            DataStoreHelper.setCheckInterval(context, seconds * 1000L)
-                            DataStoreHelper.setStartUrl(context, kioskUrl)
-                            DataStoreHelper.setRotation(context, rotation)
+                            kioskSettings.setCheckInterval(seconds * 1000L)
+                            kioskSettings.setStartUrl(kioskUrl)
+                            kioskSettings.setRotation(rotation)
 
                             StayOnTopService.restart(context)
                         }
