@@ -41,7 +41,7 @@ class DataStoreKioskSettings(private val context: Context) : KioskSettings {
         return context.dataStore.data.map { prefs ->
             val degrees: Int = try {
                 prefs[keyRotation] ?: Rotation.ROTATION_0.degrees
-            } catch (e: ClassCastException) {
+            } catch (_: ClassCastException) {
                 val legacyKey = longPreferencesKey("rotation")
                 (prefs[legacyKey] ?: Rotation.ROTATION_0.degrees.toLong()).toInt()
             }
