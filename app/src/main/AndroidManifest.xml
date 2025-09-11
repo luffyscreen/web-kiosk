@@ -42,7 +42,6 @@
             android:exported="false"
             android:foregroundServiceType="specialUse" />
 
-
         <activity
             android:name=".MainActivity"
             android:exported="true"
