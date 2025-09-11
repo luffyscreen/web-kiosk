@@ -31,8 +31,7 @@ If you find a bug, please open a GitHub issue and include logcat logs if possibl
 3. Launch the app.  
 4. Access settings by tapping the screen 5 times quickly in the bottom-left corner on a mobile device, or by pressing the center button (OK) on a TV remote.  
 5. Enter the website URL you want to display.  
-6. Set the app visibility check interval (recommended 5–10 seconds). If you need time to configure the device, set a higher number.  
-   *Note: The app won’t automatically bring itself back to the front when this timer ends.*  
+6. Set the app visibility check interval (recommended 5–10 seconds). If you need time to configure the device, set a higher number.
 7. Choose screen rotation if needed.  
 8. Save your settings; the app will restart with the new configuration.
 
@@ -41,6 +40,8 @@ If you find a bug, please open a GitHub issue and include logcat logs if possibl
 ### Minimum Android Version
 - **Android 8.0 (API Level 26)** or higher  
 - **Target SDK**: 36 (Android 14+)
+ 
+Experimental support for Android 5.1 (API Level 22) and above is available, but functionality may be limited or unstable.
 
 ### Hardware Requirements
 - **Touchscreen**: Optional (supports both touch and non-touch devices)  
