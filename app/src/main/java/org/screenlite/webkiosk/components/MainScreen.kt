@@ -1,26 +1,26 @@
 package org.screenlite.webkiosk.components
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import android.app.Activity
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import org.screenlite.webkiosk.app.DataStoreHelper
+import org.screenlite.webkiosk.data.KioskSettingsFactory
 
 @Composable
-fun MainScreen() {
+fun MainScreen(activity: Activity, modifier: Modifier) {
     val context = LocalContext.current
     var url by remember { mutableStateOf("about:blank") }
     var reloadKey by remember { mutableIntStateOf(0) }
     val lifecycleOwner = LocalLifecycleOwner.current
+    val kioskSettings = remember { KioskSettingsFactory.get(context) }
+    val configuration = LocalConfiguration.current
 
     LaunchedEffect(Unit) {
-        DataStoreHelper.getStartUrl(context).collect { newUrl ->
+        kioskSettings.getStartUrl().collect { newUrl ->
             url = newUrl
         }
     }
@@ -37,13 +37,7 @@ fun MainScreen() {
         }
     }
 
-    key(url, reloadKey) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black)
-        ) {
-            WebViewComponent(url = url)
-        }
+    key(url, reloadKey, configuration.orientation) {
+        WebViewComponent(url = url, activity = activity, modifier)
     }
 }
