@@ -6,18 +6,20 @@ import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.util.Log
+import androidx.annotation.RequiresApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import org.screenlite.webkiosk.app.DataStoreHelper
 import org.screenlite.webkiosk.MainActivity
+import org.screenlite.webkiosk.data.KioskSettingsFactory
 
 class StayOnTopService : Service() {
     companion object {
@@ -56,8 +58,10 @@ class StayOnTopService : Service() {
     override fun onCreate() {
         super.onCreate()
 
+        val kioskSettings = KioskSettingsFactory.get(this)
+
         serviceScope.launch {
-            DataStoreHelper.getCheckInterval(this@StayOnTopService).collect { interval ->
+            kioskSettings.getCheckInterval().collect { interval ->
                 Log.i("StayOnTopService", "Interval updated: $interval")
                 updateCheckInterval(interval)
             }
@@ -98,6 +102,15 @@ class StayOnTopService : Service() {
     }
 
     private fun startForegroundService() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundServiceOreo()
+        } else {
+            startForegroundServiceLegacy()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun startForegroundServiceOreo() {
         val channelId = "kiosk_channel"
         val channel = NotificationChannel(
             channelId,
@@ -112,6 +125,16 @@ class StayOnTopService : Service() {
         val nm = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         nm.createNotificationChannel(channel)
         val notification: Notification = Notification.Builder(this, channelId)
+            .setContentTitle("Screenlite Web Kiosk")
+            .setContentText("Keeping app on top")
+            .setSmallIcon(android.R.drawable.ic_lock_lock)
+            .build()
+        startForeground(1, notification)
+    }
+
+    @Suppress("DEPRECATION")
+    private fun startForegroundServiceLegacy() {
+        val notification: Notification = Notification.Builder(this)
             .setContentTitle("Screenlite Web Kiosk")
             .setContentText("Keeping app on top")
             .setSmallIcon(android.R.drawable.ic_lock_lock)
