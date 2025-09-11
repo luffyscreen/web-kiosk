@@ -7,10 +7,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import org.screenlite.webkiosk.data.Rotation
 import org.screenlite.webkiosk.ui.theme.isTvDevice
 
 @Composable
-fun RotationSelector(rotation: Int, onRotationChange: (Int) -> Unit) {
+fun RotationSelector(rotation: Rotation, onRotationChange: (Rotation) -> Unit) {
     Text(
         text = "Rotation",
         style = MaterialTheme.typography.titleLarge,
@@ -22,16 +23,16 @@ fun RotationSelector(rotation: Int, onRotationChange: (Int) -> Unit) {
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            listOf(0, 90, 180, 270).forEach { angle ->
+            Rotation.entries.forEach { rotationOption ->
                 OutlinedButton(
-                    onClick = { onRotationChange(angle) },
+                    onClick = { onRotationChange(rotationOption) },
                     colors = ButtonDefaults.outlinedButtonColors(
-                        containerColor = if (rotation == angle)
+                        containerColor = if (rotation == rotationOption)
                             MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
                         else Color.Transparent
                     )
                 ) {
-                    Text("$angle°")
+                    Text("${rotationOption.degrees}°")
                 }
             }
         }
@@ -40,22 +41,26 @@ fun RotationSelector(rotation: Int, onRotationChange: (Int) -> Unit) {
             verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
-            listOf(listOf(0, 90), listOf(180, 270)).forEach { rowAngles ->
+            val rotationOptions = listOf(
+                listOf(Rotation.ROTATION_0, Rotation.ROTATION_90),
+                listOf(Rotation.ROTATION_180, Rotation.ROTATION_270)
+            )
+            rotationOptions.forEach { rowAngles ->
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    rowAngles.forEach { angle ->
+                    rowAngles.forEach { rotationOption ->
                         OutlinedButton(
-                            onClick = { onRotationChange(angle) },
+                            onClick = { onRotationChange(rotationOption) },
                             modifier = Modifier.weight(1f),
                             colors = ButtonDefaults.outlinedButtonColors(
-                                containerColor = if (rotation == angle)
+                                containerColor = if (rotation == rotationOption)
                                     MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
                                 else Color.Transparent
                             )
                         ) {
-                            Text("$angle°")
+                            Text("${rotationOption.degrees}°")
                         }
                     }
                 }
