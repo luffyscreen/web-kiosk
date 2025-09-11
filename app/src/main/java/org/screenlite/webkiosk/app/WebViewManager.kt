@@ -3,26 +3,29 @@ package org.screenlite.webkiosk.app
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
+import android.os.Build
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import android.webkit.*
+import android.webkit.WebView.setWebContentsDebuggingEnabled
+import androidx.annotation.RequiresApi
 import org.screenlite.webkiosk.components.RotatedWebView
-
+import org.screenlite.webkiosk.data.Rotation
 class WebViewManager(
     private val context: Context,
     private val onError: (Boolean) -> Unit,
     private val onPageLoading: (Boolean) -> Unit
 ) {
 
-    fun createWebView(rotation: Int = 0): WebView {
+    fun createWebView(rotation: Rotation = Rotation.ROTATION_0): WebView {
         return RotatedWebView(context).apply {
             layoutParams = android.view.ViewGroup.LayoutParams(
                 android.view.ViewGroup.LayoutParams.MATCH_PARENT,
                 android.view.ViewGroup.LayoutParams.MATCH_PARENT
             )
             setBackgroundColor(android.graphics.Color.TRANSPARENT)
-            appliedRotation = rotation.toFloat()
+            appliedRotation = rotation.degrees.toFloat()
 
             isFocusable = true
             isFocusableInTouchMode = true
@@ -44,7 +47,7 @@ class WebViewManager(
             mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
             mediaPlaybackRequiresUserGesture = false
             setSupportMultipleWindows(true)
-
+            setWebContentsDebuggingEnabled(true)
             val displayMetrics = context.resources.displayMetrics
             setInitialScale(calculateScale(displayMetrics))
 
@@ -81,11 +84,17 @@ class WebViewManager(
                 }, 1000)
             }
 
-            override fun onReceivedError(
-                view: WebView,
-                request: WebResourceRequest,
-                error: WebResourceError
-            ) {
+            @Suppress("DEPRECATION")
+            @Deprecated("Deprecated in API 23")
+            override fun onReceivedError(view: WebView?, errorCode: Int, description: String?, failingUrl: String?) {
+                Log.e("WebViewManager", "Legacy page failed: $failingUrl, code=$errorCode, desc=$description")
+                onPageLoading(false)
+                onError(true)
+                super.onReceivedError(view, errorCode, description, failingUrl)
+            }
+
+            @RequiresApi(Build.VERSION_CODES.M)
+            override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceError) {
                 if (request.isForMainFrame) {
                     onPageLoading(false)
                     onError(true)
