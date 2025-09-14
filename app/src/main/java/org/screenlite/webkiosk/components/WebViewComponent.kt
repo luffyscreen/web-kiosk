@@ -23,6 +23,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import org.screenlite.webkiosk.data.KioskSettingsFactory
 import org.screenlite.webkiosk.data.Rotation
+import androidx.compose.ui.platform.LocalConfiguration
+import android.content.res.Configuration
 
 private const val TAG = "WebViewComponent"
 @Composable
@@ -40,12 +42,43 @@ fun WebViewComponent(
     var retryCount by remember { mutableIntStateOf(0) }
     var retryTrigger by remember { mutableIntStateOf(0) }
 
+    val webViewManager = remember {
+        WebViewManager(
+            activity,
+            onError = { err ->
+                Log.e(TAG, "WebView error: $err")
+                hasError = err
+                if (err) {
+                    hasLoadedPage = false
+                }
+            },
+            onPageLoading = { loading ->
+                isLoading = loading
+                Log.d(TAG, "Page loading=$loading")
+                if (!loading && !hasError) {
+                    hasLoadedPage = true
+                    Log.d(TAG, "Page loaded successfully")
+                }
+            }
+        )
+    }
+
+    val configuration = LocalConfiguration.current
+    LaunchedEffect(configuration.orientation) {
+        val orientation =
+            if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) "LANDSCAPE"
+            else "PORTRAIT"
+
+        Log.d(TAG, "Device orientation changed: $orientation")
+        webViewManager.updateRotation(rotation)
+    }
+
     LaunchedEffect(Unit) {
         val kioskSettings = KioskSettingsFactory.get(context)
-
         kioskSettings.getRotation().collect { newRotation ->
             Log.d(TAG, "Rotation updated: $newRotation")
             rotation = newRotation
+            webViewManager.updateRotation(newRotation)
         }
     }
 
@@ -99,41 +132,22 @@ fun WebViewComponent(
         }
     }
 
-    key(rotation, retryTrigger) {
-        AndroidView(
-            modifier = modifier,
-            factory = { ctx ->
-                Log.d(TAG, "Creating WebView (rotation=$rotation, retryTrigger=$retryTrigger)")
-                WebViewManager(
-                    activity,
-                    onError = { err ->
-                        Log.e(TAG, "WebView error: $err")
-                        hasError = err
-                        if (err) {
-                            hasLoadedPage = false
-                        }
-                    },
-                    onPageLoading = { loading ->
-                        isLoading = loading
-                        Log.d(TAG, "Page loading=$loading")
-                        if (!loading && !hasError) {
-                            hasLoadedPage = true
-                            Log.d(TAG, "Page loaded successfully")
-                        }
-                    }
-                ).createWebView(rotation)
-            },
-            update = { webView ->
-                if (webView.url != url) {
-                    Log.d(TAG, "Loading new URL: $url")
-                    webView.loadUrl(url)
-                } else if (retryTrigger > 0 && !hasLoadedPage) {
-                    Log.d(TAG, "Retry triggered, reloading WebView")
-                    webView.reload()
-                }
+    AndroidView(
+        modifier = modifier,
+        factory = { ctx ->
+            Log.d(TAG, "Creating WebView (rotation=$rotation)")
+            webViewManager.createWebView(rotation)
+        },
+        update = { webView ->
+            if (webView.url != url) {
+                Log.d(TAG, "Loading new URL: $url")
+                webView.loadUrl(url)
+            } else if (retryTrigger > 0 && !hasLoadedPage) {
+                Log.d(TAG, "Retry triggered, reloading WebView")
+                webView.reload()
             }
-        )
-    }
+        }
+    )
 
     when {
         hasError -> Box(

@@ -12,14 +12,15 @@ import android.webkit.WebView.setWebContentsDebuggingEnabled
 import androidx.annotation.RequiresApi
 import org.screenlite.webkiosk.components.RotatedWebView
 import org.screenlite.webkiosk.data.Rotation
+
 class WebViewManager(
     private val context: Context,
     private val onError: (Boolean) -> Unit,
     private val onPageLoading: (Boolean) -> Unit
 ) {
-
+    private var currentWebView: WebView? = null
     fun createWebView(rotation: Rotation = Rotation.ROTATION_0): WebView {
-        return RotatedWebView(context).apply {
+        val webView = RotatedWebView(context).apply {
             layoutParams = android.view.ViewGroup.LayoutParams(
                 android.view.ViewGroup.LayoutParams.MATCH_PARENT,
                 android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -34,6 +35,9 @@ class WebViewManager(
             configureWebViewSettings()
             setupWebViewListeners()
         }
+
+        currentWebView = webView
+        return webView
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -65,6 +69,16 @@ class WebViewManager(
     private fun calculateScale(displayMetrics: DisplayMetrics): Int {
         val density = displayMetrics.density
         return (100 / density).toInt()
+    }
+
+    fun updateRotation(rotation: Rotation) {
+        currentWebView?.let { webView ->
+            if (webView is RotatedWebView) {
+                webView.appliedRotation = rotation.degrees.toFloat()
+            }
+
+            ViewportMetaInjector.inject(webView)
+        }
     }
 
     private fun WebView.setupWebViewListeners() {
@@ -120,6 +134,29 @@ class WebViewManager(
         }
 
         webChromeClient = object : WebChromeClient() {
+            override fun onCreateWindow(
+                view: WebView?,
+                isDialog: Boolean,
+                isUserGesture: Boolean,
+                resultMsg: android.os.Message?
+            ): Boolean {
+                val transport = resultMsg?.obj as? WebView.WebViewTransport
+
+                val tempWebView = WebView(context).apply {
+                    webViewClient = object : WebViewClient() {
+                        override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+                            val url = request?.url.toString()
+                            this@WebViewManager.currentWebView?.loadUrl(url)
+                            return true
+                        }
+                    }
+                }
+
+                transport?.webView = tempWebView
+                resultMsg?.sendToTarget()
+                return true
+            }
+
             override fun onConsoleMessage(consoleMessage: ConsoleMessage): Boolean {
                 Log.d(
                     "WebViewConsole",
