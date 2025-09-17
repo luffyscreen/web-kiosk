@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Screenlite Web Kiosk</string>
-
+    <string name="stay_on_top_service_justification" translatable="false">This service is required to keep the web kiosk application visible and prevent it from being closed, which is the core functionality of a kiosk app.</string>
     <!-- Settings Screen -->
     <string name="settings_title">Kiosk Settings</string>
     <string name="settings_kiosk_url_label">Kiosk URL</string>
