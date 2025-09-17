@@ -2,7 +2,7 @@
 
 A simple Android kiosk browser app that displays web content in full-screen mode.
 
-[<img src="./docs/media/get_apk.png" height="80" alt="Get APK">](https://github.com/screenlite/web-kiosk/releases/download/v0.0.7/screenlite-web-kiosk-v0-0-7.apk)
+[<img src="./docs/media/get_apk.png" height="80" alt="Get APK">](https://github.com/screenlite/web-kiosk/releases/download/v0.0.8/screenlite-web-kiosk-v0-0-8.apk)
 [<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="80" alt="Get it at IzzyOnDroid">](https://apt.izzysoft.de/packages/org.screenlite.webkiosk)
 
 ![preview](./docs/media/image.png)
