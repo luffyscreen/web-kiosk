@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -18,17 +19,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import org.screenlite.webkiosk.app.FullScreenHelper
+import org.screenlite.webkiosk.app.IdleBrightnessController
 import org.screenlite.webkiosk.app.NotificationPermissionHelper
 import org.screenlite.webkiosk.app.StayOnTopServiceStarter
 import org.screenlite.webkiosk.app.TapUnlockHandler
 import org.screenlite.webkiosk.components.MainScreen
 import org.screenlite.webkiosk.components.TouchKioskInputOverlay
 import org.screenlite.webkiosk.components.TvKioskInputOverlay
+import org.screenlite.webkiosk.data.KioskSettingsFactory
 import org.screenlite.webkiosk.ui.theme.ScreenliteWebKioskTheme
 import org.screenlite.webkiosk.ui.theme.isTvDevice
 
 class MainActivity : ComponentActivity() {
     private lateinit var unlockHandler: TapUnlockHandler
+    private lateinit var idleController: IdleBrightnessController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +44,9 @@ class MainActivity : ComponentActivity() {
             openSettings()
         }
 
+        val settings = KioskSettingsFactory.get(this)
+        idleController = IdleBrightnessController(this, settings)
+
         setContent {
             ScreenliteWebKioskTheme {
                 AppContent(unlockHandler, this)
@@ -47,8 +54,23 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        idleController.onUserInteraction()
+        return super.dispatchTouchEvent(ev)
+    }
+
     private fun openSettings() {
         startActivity(Intent(this, SettingsActivity::class.java))
+    }
+
+    override fun onPause() {
+        super.onPause()
+        idleController.stop()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        idleController.start()
     }
 }
 
