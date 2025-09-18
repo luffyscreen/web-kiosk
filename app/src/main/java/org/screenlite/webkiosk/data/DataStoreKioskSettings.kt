@@ -12,6 +12,9 @@ class DataStoreKioskSettings(private val context: Context) : KioskSettings {
     private val keyCheckInterval = longPreferencesKey("check_interval")
     private val keyStartUrl = stringPreferencesKey("start_url")
     private val keyRotation = intPreferencesKey("rotation")
+    private val keyIdleTimeout = longPreferencesKey("idle_timeout")
+    private val keyIdleBrightness = intPreferencesKey("idle_brightness")
+    private val keyActiveBrightness = intPreferencesKey("active_brightness")
 
     override fun getCheckInterval(): Flow<Long> {
         return context.dataStore.data.map { prefs ->
@@ -63,5 +66,29 @@ class DataStoreKioskSettings(private val context: Context) : KioskSettings {
         context.dataStore.edit { prefs ->
             prefs[keyRotation] = rotation.degrees
         }
+    }
+
+    override fun getIdleTimeout(): Flow<Long> = context.dataStore.data.map { prefs ->
+        prefs[keyIdleTimeout] ?: 60L
+    }
+
+    override suspend fun setIdleTimeout(timeout: Long) {
+        context.dataStore.edit { prefs -> prefs[keyIdleTimeout] = timeout }
+    }
+
+    override fun getIdleBrightness(): Flow<Int> = context.dataStore.data.map { prefs ->
+        prefs[keyIdleBrightness] ?: 0
+    }
+
+    override suspend fun setIdleBrightness(brightness: Int) {
+        context.dataStore.edit { prefs -> prefs[keyIdleBrightness] = brightness.coerceIn(0, 100) }
+    }
+
+    override fun getActiveBrightness(): Flow<Int> = context.dataStore.data.map { prefs ->
+        prefs[keyActiveBrightness] ?: 100
+    }
+
+    override suspend fun setActiveBrightness(brightness: Int) {
+        context.dataStore.edit { prefs -> prefs[keyActiveBrightness] = brightness.coerceIn(0, 100) }
     }
 }
