@@ -19,4 +19,15 @@
     <!-- Buttons -->
     <string name="button_cancel">Annulla</string>
     <string name="button_save">Salva</string>
+
+    <string name="settings_idle_timeout_label">Timeout di inattività (secondi)</string>
+    <string name="settings_idle_timeout_desc">Tempo prima che lo schermo si oscuri a causa dell\'inattività.</string>
+
+    <string name="settings_idle_brightness_label">Luminosità inattiva (%)</string>
+    <string name="settings_idle_brightness_desc">Livello di luminosità quando il dispositivo è inattivo. 0 = minimo.</string>
+
+    <string name="settings_active_brightness_label">Luminosità attiva (%)</string>
+    <string name="settings_active_brightness_desc">Livello di luminosità quando il dispositivo è in uso. 100 = massimo.</string>
+
+    <string name="settings_invalid">Si prega di inserire valori validi</string>
 </resources>

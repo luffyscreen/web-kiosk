@@ -19,4 +19,15 @@
     <!-- Buttons -->
     <string name="button_cancel">Cancel</string>
     <string name="button_save">Save</string>
+
+    <string name="settings_idle_timeout_label">Idle Timeout (seconds)</string>
+    <string name="settings_idle_timeout_desc">Time before the screen dims due to inactivity.</string>
+
+    <string name="settings_idle_brightness_label">Idle Brightness (%)</string>
+    <string name="settings_idle_brightness_desc">Brightness level when the device is idle. 0 = minimum.</string>
+
+    <string name="settings_active_brightness_label">Active Brightness (%)</string>
+    <string name="settings_active_brightness_desc">Brightness level when the device is in use. 100 = maximum.</string>
+
+    <string name="settings_invalid">Please enter valid values</string>
 </resources>

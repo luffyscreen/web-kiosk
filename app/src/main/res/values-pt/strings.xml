@@ -19,4 +19,15 @@
     <!-- Buttons -->
     <string name="button_cancel">Cancelar</string>
     <string name="button_save">Guardar</string>
+
+    <string name="settings_idle_timeout_label">Tempo limite de inatividade (segundos)</string>
+    <string name="settings_idle_timeout_desc">Tempo antes que a tela escureça devido à inatividade.</string>
+
+    <string name="settings_idle_brightness_label">Brilho inativo (%)</string>
+    <string name="settings_idle_brightness_desc">Nível de brilho quando o dispositivo está inativo. 0 = mínimo.</string>
+
+    <string name="settings_active_brightness_label">Brilho ativo (%)</string>
+    <string name="settings_active_brightness_desc">Nível de brilho quando o dispositivo está em uso. 100 = máximo.</string>
+
+    <string name="settings_invalid">Por favor, insira valores válidos</string>
 </resources>

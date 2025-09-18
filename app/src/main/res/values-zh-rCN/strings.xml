@@ -19,4 +19,15 @@
     <!-- Buttons -->
     <string name="button_cancel">取消</string>
     <string name="button_save">保存</string>
+
+    <string name="settings_idle_timeout_label">空闲超时（秒）</string>
+    <string name="settings_idle_timeout_desc">屏幕因不活动而变暗前的时间。</string>
+
+    <string name="settings_idle_brightness_label">空闲亮度 (%)</string>
+    <string name="settings_idle_brightness_desc">设备空闲时的亮度级别。0 = 最低。</string>
+
+    <string name="settings_active_brightness_label">活动亮度 (%)</string>
+    <string name="settings_active_brightness_desc">设备使用时的亮度级别。100 = 最高。</string>
+
+    <string name="settings_invalid">请输入有效值</string>
 </resources>
