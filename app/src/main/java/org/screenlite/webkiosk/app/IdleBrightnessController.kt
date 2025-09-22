@@ -9,7 +9,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.screenlite.webkiosk.data.KioskSettings
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
+const val TAG = "IdleBrightness"
 class IdleBrightnessController(
     private val activity: Activity,
     private val settings: KioskSettings
@@ -20,12 +23,18 @@ class IdleBrightnessController(
     private var activeBrightness: Int = 100
 
     private val checkIdleRunnable = Runnable {
-        Log.d("IdleBrightness", "Idle timeout reached → switching to idle brightness: $idleBrightness%")
+        Log.d(TAG, "Idle timeout reached → switching to idle brightness: $idleBrightness%")
         setBrightness(idleBrightness)
+        if (idleBrightness == 0) {
+            _isIdleMode.value = true
+        }
     }
 
+    private val _isIdleMode = MutableStateFlow(false)
+    val isIdleMode = _isIdleMode.asStateFlow()
+
     fun start() {
-        Log.d("IdleBrightness", "Starting IdleBrightnessController...")
+        Log.d(TAG, "Starting IdleBrightnessController...")
 
         CoroutineScope(Dispatchers.Main).launch {
             idleTimeout = (settings.getIdleTimeout().first() * 1000)
@@ -33,7 +42,7 @@ class IdleBrightnessController(
             activeBrightness = settings.getActiveBrightness().first()
 
             Log.d(
-                "IdleBrightness",
+                TAG,
                 "Loaded settings → timeout=${idleTimeout}ms, idleBrightness=$idleBrightness%, activeBrightness=$activeBrightness%"
             )
         }
@@ -44,8 +53,9 @@ class IdleBrightnessController(
     private fun resetIdleTimer() {
         handler.removeCallbacks(checkIdleRunnable)
         setBrightness(activeBrightness)
+        _isIdleMode.value = false
         Log.d(
-            "IdleBrightness",
+            TAG,
             "Idle timer reset → switching to active brightness: $activeBrightness% (next idle in ${idleTimeout}ms)"
         )
         handler.postDelayed(checkIdleRunnable, idleTimeout)
@@ -56,19 +66,19 @@ class IdleBrightnessController(
             val lp = activity.window.attributes
             lp.screenBrightness = level / 100f
             activity.window.attributes = lp
-            Log.d("IdleBrightness", "Screen brightness set to $level%")
+            Log.d(TAG, "Screen brightness set to $level%")
         } catch (e: Exception) {
-            Log.e("IdleBrightness", "Failed to set brightness", e)
+            Log.e(TAG, "Failed to set brightness", e)
         }
     }
 
     fun stop() {
         handler.removeCallbacks(checkIdleRunnable)
-        Log.d("IdleBrightness", "Stopped IdleBrightnessController")
+        Log.d(TAG, "Stopped IdleBrightnessController")
     }
 
     fun onUserInteraction() {
-        Log.d("IdleBrightness", "User interaction detected → resetting idle timer")
+        Log.d(TAG, "User interaction detected → resetting idle timer")
         resetIdleTimer()
     }
 }
