@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import android.content.res.Configuration
 
 private const val TAG = "WebViewComponent"
+
 @Composable
 fun WebViewComponent(
     url: String,
@@ -131,27 +132,29 @@ fun WebViewComponent(
             cm.unregisterNetworkCallback(callback)
         }
     }
-
-    AndroidView(
-        modifier = modifier,
-        factory = { ctx ->
-            Log.d(TAG, "Creating WebView (rotation=$rotation)")
-            webViewManager.createWebView(rotation)
-        },
-        update = { webView ->
-            if (webView.url != url) {
-                Log.d(TAG, "Loading new URL: $url")
-                webView.loadUrl(url)
-            } else if (retryTrigger > 0 && !hasLoadedPage) {
-                Log.d(TAG, "Retry triggered, reloading WebView")
-                webView.reload()
-            }
-        }
-    )
+    key(retryTrigger) {
+        AndroidView(
+            modifier = modifier,
+            factory = { ctx ->
+                Log.d(TAG, "Creating WebView (rotation=$rotation)")
+                webViewManager.createWebView(rotation)
+            },
+            update = { webView ->
+                if (webView.url != url) {
+                    Log.d(TAG, "Loading new URL: $url")
+                    webView.loadUrl(url)
+                } else if (retryTrigger > 0 && !hasLoadedPage) {
+                    Log.d(TAG, "Retry triggered, reloading WebView")
+                    webView.reload()
+                }
+            })
+    }
 
     when {
         hasError -> Box(
-            Modifier.fillMaxSize().background(Color.Black),
+            Modifier
+                .fillMaxSize()
+                .background(Color.Black),
             contentAlignment = Alignment.Center
         ) {
             Log.w(TAG, "Showing connection error UI")
@@ -159,7 +162,9 @@ fun WebViewComponent(
         }
 
         isLoading -> Box(
-            Modifier.fillMaxSize().background(Color.Black),
+            Modifier
+                .fillMaxSize()
+                .background(Color.Black),
             contentAlignment = Alignment.Center
         ) {
             Log.d(TAG, "Showing loading UI")
