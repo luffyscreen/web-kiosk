@@ -4,12 +4,15 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.MotionEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -19,7 +22,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalContext
 import org.screenlite.webkiosk.app.FullScreenHelper
 import org.screenlite.webkiosk.app.IdleBrightnessController
@@ -89,6 +97,10 @@ fun AppContent(unlockHandler: TapUnlockHandler, activity: Activity) {
         Log.d("MainActivity", "Notification permission granted: $isGranted")
     }
 
+    LaunchedEffect(isIdleMode) {
+        Log.d("IdleDebug", "Compose: isIdleMode state changed to: $isIdleMode")
+    }
+
     LaunchedEffect(Unit) {
         if (!NotificationPermissionHelper.hasPermission(context)) {
             NotificationPermissionHelper.requestPermission(permissionLauncher)
@@ -101,19 +113,40 @@ fun AppContent(unlockHandler: TapUnlockHandler, activity: Activity) {
         MainScreen(activity = activity, modifier = Modifier.fillMaxSize())
 
         if(isTv) {
-            TvKioskInputOverlay(onTap = { unlockHandler.registerTap() })
+            TvKioskInputOverlay(onTap = {
+                idleController.onUserInteraction()
+                unlockHandler.registerTap()
+            })
         } else {
             TouchKioskInputOverlay(
                 onTap = { unlockHandler.registerTap() },
                 modifier = Modifier.align(Alignment.BottomStart),
             )
         }
-    }
 
-    if (isIdleMode) {
-        Box(
-            Modifier.fillMaxSize().background(Color.Black),
-            contentAlignment = Alignment.Center
-        ) {}
+        val idleFocusRequester = remember { FocusRequester() }
+
+        if (isIdleMode) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black)
+                    .clickable {
+                        idleController.onUserInteraction()
+                    }
+                    .focusable()
+                    .focusRequester(idleFocusRequester)
+                    .onKeyEvent {
+                        if (it.key == Key.DirectionCenter &&
+                            it.nativeKeyEvent.action == KeyEvent.ACTION_DOWN) {
+                            idleController.onUserInteraction()
+                            true
+                        } else {
+                            false
+                        }
+                    },
+                contentAlignment = Alignment.Center
+            ) {}
+        }
     }
 }
