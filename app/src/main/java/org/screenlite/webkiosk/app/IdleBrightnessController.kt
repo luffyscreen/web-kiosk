@@ -45,9 +45,9 @@ class IdleBrightnessController(
                 TAG,
                 "Loaded settings → timeout=${idleTimeout}ms, idleBrightness=$idleBrightness%, activeBrightness=$activeBrightness%"
             )
-        }
 
-        resetIdleTimer()
+            resetIdleTimer()
+        }
     }
 
     private fun resetIdleTimer() {
